@@ -7,6 +7,7 @@ import org.jboss.logging.Logger;
 
 import io.quarkus.runtime.StartupEvent;
 import twitter4j.*;
+import twitter4j.conf.ConfigurationBuilder;
 
 @ApplicationScoped
 public class StreamingService {
@@ -19,7 +20,12 @@ public class StreamingService {
 
     void onStart(@Observes StartupEvent ev) {
         log.info("The application is starting...");
-        twitterStream = new TwitterStreamFactory().getInstance().addListener(new StatusListener() {
+        ConfigurationBuilder config = new ConfigurationBuilder();
+        config.setDebugEnabled(false).setOAuthConsumerKey("jRtx7mcn1vhgmkt15MnDOV3dY")
+                .setOAuthConsumerSecret("U7JpOrO82V6h7FL1pVw4ioNoaZbt7TGXJbP1H6YLGKZpUFrIBg")
+                .setOAuthAccessToken("2598404008-EAWKX8WNIF0hkVfJ76EI9MznFGJ2hleW3xkXkQx")
+                .setOAuthAccessTokenSecret("6vthrEaGPGaAxjLpyPHW1GQvZROR1RRE6DvJEDHNqLNyG");
+        twitterStream = new TwitterStreamFactory(config.build()).getInstance().addListener(new StatusListener() {
             @Override
             public void onStatus(Status status) {
                 log.debug("@" + status.getUser().getScreenName() + " - " + status.getText());
@@ -27,22 +33,22 @@ public class StreamingService {
 
             @Override
             public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {
-                //Empty method implementation
+                // Empty method implementation
             }
 
             @Override
             public void onTrackLimitationNotice(int numberOfLimitedStatuses) {
-                //Empty method implementation
+                // Empty method implementation
             }
 
             @Override
             public void onScrubGeo(long userId, long upToStatusId) {
-                //Empty method implementation
+                // Empty method implementation
             }
 
             @Override
             public void onStallWarning(StallWarning warning) {
-                //Empty method implementation
+                // Empty method implementation
             }
 
             @Override
