@@ -14,10 +14,7 @@ public class GreetingResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String hello() {
-        log.info("info");
-        log.debug("debug");
-        log.info(log.isDebugEnabled());
-        log.debug("cristian");
+        log.debug("Starting service...");
         return "Hello RESTEasy";
     }
 }
