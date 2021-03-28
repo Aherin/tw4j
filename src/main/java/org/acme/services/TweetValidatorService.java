@@ -11,7 +11,7 @@ import twitter4j.User;
 public class TweetValidatorService {
 
     public TweetValidatorService() {
-        // Empty method implementation
+        // Empty constructor implementation
     }
 
     enum Language {
