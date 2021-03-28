@@ -1,22 +1,29 @@
 package org.acme.services;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
-import javax.inject.Inject;
 
 import org.acme.entities.Tweet;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import io.quarkus.runtime.StartupEvent;
-import twitter4j.*;
+import twitter4j.StallWarning;
+import twitter4j.Status;
+import twitter4j.StatusDeletionNotice;
+import twitter4j.StatusListener;
+import twitter4j.TwitterStream;
+import twitter4j.TwitterStreamFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
 @ApplicationScoped
 public class StreamingService {
 
+    private long id;
     private TwitterStream twitterStream;
     private Set<Tweet> tweets = Collections.synchronizedSet(new LinkedHashSet<>());
     private static final Logger log = Logger.getLogger(StreamingService.class);
@@ -35,9 +42,9 @@ public class StreamingService {
         twitterStream = new TwitterStreamFactory(config.build()).getInstance().addListener(new StatusListener() {
             @Override
             public void onStatus(Status status) {
-                if (tweetValidatorService.isTweetValid(status)) {
+                if (tweetValidatorService.isTweetValid(status)) {                    
                     log.debug("@" + status.getUser().getScreenName() + " - " + status.getText());
-                    tweets.add(new Tweet(status.getUser().getScreenName(), status.getText(),
+                    tweets.add(new Tweet(id++, status.getUser().getScreenName(), status.getText(),
                             status.getPlace().getFullName()));
                     log.debug("Numero de tweets:" + tweets.size());
                 }
@@ -89,6 +96,14 @@ public class StreamingService {
 
     void setTweets(Set<Tweet> tweets) {
         this.tweets = tweets;
+    }
+
+    long getId() {
+        return id;
+    }
+
+    void setId(long id) {
+        this.id = id;
     }
 
 }
