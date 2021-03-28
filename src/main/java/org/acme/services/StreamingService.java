@@ -8,6 +8,7 @@ import javax.inject.Inject;
 
 import org.acme.entities.Tweet;
 import org.jboss.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import io.quarkus.runtime.StartupEvent;
 import twitter4j.*;
@@ -17,10 +18,10 @@ import twitter4j.conf.ConfigurationBuilder;
 public class StreamingService {
 
     private TwitterStream twitterStream;
-    private Set<Tweet> tweets = Collections.newSetFromMap(Collections.synchronizedMap(new LinkedHashMap<>()));
+    private Set<Tweet> tweets = Collections.synchronizedSet(new LinkedHashSet<>());
     private static final Logger log = Logger.getLogger(StreamingService.class);
 
-    @Inject
+    @Autowired
     private TweetValidatorService tweetValidatorService;
 
     void onStart(@Observes StartupEvent ev) {
