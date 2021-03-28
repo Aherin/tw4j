@@ -1,8 +1,12 @@
 package org.acme.services;
 
+import java.util.*;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
+import javax.inject.Inject;
 
+import org.acme.entities.Tweet;
 import org.jboss.logging.Logger;
 
 import io.quarkus.runtime.StartupEvent;
@@ -13,10 +17,11 @@ import twitter4j.conf.ConfigurationBuilder;
 public class StreamingService {
 
     private TwitterStream twitterStream;
+    private Set<Tweet> tweets = Collections.newSetFromMap(Collections.synchronizedMap(new LinkedHashMap<>()));
     private static final Logger log = Logger.getLogger(StreamingService.class);
 
-    private StreamingService() {
-    }
+    @Inject
+    private TweetValidatorService tweetValidatorService;
 
     void onStart(@Observes StartupEvent ev) {
         log.info("The application is starting...");
@@ -25,10 +30,17 @@ public class StreamingService {
                 .setOAuthConsumerSecret("U7JpOrO82V6h7FL1pVw4ioNoaZbt7TGXJbP1H6YLGKZpUFrIBg")
                 .setOAuthAccessToken("2598404008-EAWKX8WNIF0hkVfJ76EI9MznFGJ2hleW3xkXkQx")
                 .setOAuthAccessTokenSecret("6vthrEaGPGaAxjLpyPHW1GQvZROR1RRE6DvJEDHNqLNyG");
+
         twitterStream = new TwitterStreamFactory(config.build()).getInstance().addListener(new StatusListener() {
             @Override
             public void onStatus(Status status) {
-                log.debug("@" + status.getUser().getScreenName() + " - " + status.getText());
+                if (tweetValidatorService.isTweetValid(status)) {
+                    log.debug("@" + status.getUser().getScreenName() + " - " + status.getText());
+                    tweets.add(new Tweet(status.getUser().getScreenName(), status.getText(),
+                            status.getPlace().getFullName()));
+                    log.debug("Numero de tweets:" + tweets.size());
+                }
+
             }
 
             @Override
@@ -58,16 +70,24 @@ public class StreamingService {
         }).sample();
     }
 
-    public TwitterStream getTwitterStream() {
+    TwitterStream getTwitterStream() {
         return twitterStream;
     }
 
-    public void setTwitterStream(TwitterStream twitterStream) {
+    void setTwitterStream(TwitterStream twitterStream) {
         this.twitterStream = twitterStream;
     }
 
-    public static Logger getLog() {
+    static Logger getLog() {
         return log;
+    }
+
+    public Set<Tweet> getTweets() {
+        return tweets;
+    }
+
+    void setTweets(Set<Tweet> tweets) {
+        this.tweets = tweets;
     }
 
 }
