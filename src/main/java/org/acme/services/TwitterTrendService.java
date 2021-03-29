@@ -33,8 +33,10 @@ public class TwitterTrendService {
                     .getInstance();
             Trends trends = twitter.getPlaceTrends(WORLDWIDE_TREND_CODE);
             for (Trend trend : trends.getTrends()) {
-                count++;
-                trendList.add(trend);
+                if (trend.getName().contains("#")) {
+                    trendList.add(trend);
+                    count++;
+                }
                 if (count == maximumHashtagResults) {
                     break;
                 }
