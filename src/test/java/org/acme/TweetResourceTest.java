@@ -7,9 +7,9 @@ import org.junit.jupiter.api.Test;
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
-public class TweetResourceTest {
+class TweetResourceTest {
     @Test
-    public void testTweetsEndpoint() {
+    void testTweetsEndpoint() {
         given()
           .when().get("/tweets")
           .then()
@@ -17,7 +17,7 @@ public class TweetResourceTest {
     }
 
     @Test
-    public void testTweetsValidEndpoint() {
+    void testTweetsValidEndpoint() {
         given()
           .when().get("/tweets/valid")
           .then()
@@ -25,7 +25,7 @@ public class TweetResourceTest {
     }
 
     @Test
-    public void testTweetsTrendsEndpoint() {
+    void testTweetsTrendsEndpoint() {
         given()
           .when().get("/tweets/trends")
           .then()
