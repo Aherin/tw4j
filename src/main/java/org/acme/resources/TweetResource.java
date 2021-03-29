@@ -1,7 +1,6 @@
 package org.acme.resources;
 
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 
 import org.acme.entities.Tweet;
 import org.acme.services.StreamingService;
