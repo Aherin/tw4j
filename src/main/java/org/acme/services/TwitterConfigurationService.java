@@ -20,7 +20,9 @@ public class TwitterConfigurationService {
     String accessTokenSecret;
 
     /**
-     * Retorna la configuracion necesaria para la autenticacion con la API publica de Twitter
+     * Retorna la configuracion necesaria para la autenticacion con la API publica
+     * de Twitter
+     * 
      * @return {@link ConfigurationBuilder}
      */
     public ConfigurationBuilder getTwitterConfiguration() {

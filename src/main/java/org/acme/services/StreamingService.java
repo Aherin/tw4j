@@ -34,14 +34,16 @@ public class StreamingService {
     TwitterConfigurationService twitterConfigurationService;
 
     /**
-     * Este metodo se arranca al momento que se inicializa la aplicacion y permite iniciar el 
-     * servicio de streaming de Twitter.
+     * Este metodo se arranca al momento que se inicializa la aplicacion y permite
+     * iniciar el servicio de streaming de Twitter.
+     * 
      * @param ev
      */
     void onStart(@Observes StartupEvent ev) {
         ConfigurationBuilder config = twitterConfigurationService.getTwitterConfiguration();
 
-        // Inicializacion del hilo para la ejecucion del servicio de streaming de Twitter
+        // Inicializacion del hilo para la ejecucion del servicio de streaming de
+        // Twitter
         twitterStream = new TwitterStreamFactory(config.build()).getInstance().addListener(new StatusListener() {
             @Override
             public void onStatus(Status status) {

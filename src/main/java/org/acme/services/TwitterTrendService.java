@@ -27,6 +27,7 @@ public class TwitterTrendService {
 
     /**
      * Retorna una lista de las tendencias de Twitter a nivel global
+     * 
      * @return {@link List<{@link Trend}>
      */
     public List<Trend> getWorldwideTrends() {

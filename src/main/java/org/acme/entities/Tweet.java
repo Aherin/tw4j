@@ -24,7 +24,9 @@ public class Tweet {
     }
 
     /**
-     * Regresa una lista de Tweets los cuales tienen la propiedad {@code valid} en {@code true}
+     * Regresa una lista de Tweets los cuales tienen la propiedad {@code valid} en
+     * {@code true}
+     * 
      * @param tweets
      * @return {@code Set<Tweet>}
      */
@@ -34,7 +36,9 @@ public class Tweet {
     }
 
     /**
-     * Regresa un objecto de tipo {@link Tweet} una vez se ha actualizado el parametro {@code valid}
+     * Regresa un objecto de tipo {@link Tweet} una vez se ha actualizado el
+     * parametro {@code valid}
+     * 
      * @param tweets
      * @param id
      * @return {@link Tweet}

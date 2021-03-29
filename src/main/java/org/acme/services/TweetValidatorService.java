@@ -26,8 +26,10 @@ public class TweetValidatorService {
     }
 
     /**
-     * Realiza una serie de validaciones con respecto a las restricciones de diseño con el fin de
-     * garantizar la persistencia de datos correctos. Si todo el correcto retorna {@code true }
+     * Realiza una serie de validaciones con respecto a las restricciones de diseño
+     * con el fin de garantizar la persistencia de datos correctos. Si todo el
+     * correcto retorna {@code true }
+     * 
      * @param status
      * @return {@link Boolean}
      */
@@ -38,6 +40,7 @@ public class TweetValidatorService {
 
     /**
      * Valida si el usuario de Twitter tiene un numero mayor o igual de N seguidores
+     * 
      * @param user
      * @param minimumFollowersCount
      * @return {@link Boolean}
@@ -49,6 +52,7 @@ public class TweetValidatorService {
 
     /**
      * Valida si el usuario tiene habilitada la opcion de localizacion
+     * 
      * @param status
      * @return {@link Boolean}
      */
@@ -57,7 +61,9 @@ public class TweetValidatorService {
     }
 
     /**
-     * Valida si el Tweet tiene uno de los lenguajes permitidos (Español, Frances, Italiano)
+     * Valida si el Tweet tiene uno de los lenguajes permitidos (Español, Frances,
+     * Italiano)
+     * 
      * @param status
      * @return {@link Boolean}
      */
@@ -69,6 +75,7 @@ public class TweetValidatorService {
 
     /**
      * Realiza la comprobacion si el Tweet fue actualizado o no
+     * 
      * @param tweets
      * @param id
      * @return {@link Response}
