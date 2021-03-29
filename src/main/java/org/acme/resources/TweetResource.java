@@ -1,6 +1,7 @@
 package org.acme.resources;
 
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import org.acme.entities.Tweet;
 import org.acme.services.StreamingService;
@@ -32,7 +33,12 @@ public class TweetResource {
 
     @PutMapping(path = "/valid/{id}", produces = "application/json")
     public Response updateValidTweets(@PathVariable(name = "id") long id) {
-        return Response.ok(Tweet.updateValidTweet(streamingService.getTweets(), id)).build();
+        String codeNotFoundMessage = "{\"errorMessage\": \"Code not found\"}";
+        Tweet tweet = Tweet.updateValidTweet(streamingService.getTweets(), id);
+        if (tweet.getScreenName() == null) {
+            return Response.status(Status.NOT_FOUND).entity(codeNotFoundMessage).build();
+        }
+        return Response.status(Status.CREATED).entity(tweet).build();
     }
 
     @GetMapping(path = "/trends", produces = "application/json")
