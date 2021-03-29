@@ -30,19 +30,15 @@ public class StreamingService {
 
     @Autowired
     private TweetValidatorService tweetValidatorService;
+    @Autowired
+    private TwitterConfigurationService twitterConfigurationService;
 
     void onStart(@Observes StartupEvent ev) {
-        log.info("The application is starting...");
-        ConfigurationBuilder config = new ConfigurationBuilder();
-        config.setDebugEnabled(false).setOAuthConsumerKey("jRtx7mcn1vhgmkt15MnDOV3dY")
-                .setOAuthConsumerSecret("U7JpOrO82V6h7FL1pVw4ioNoaZbt7TGXJbP1H6YLGKZpUFrIBg")
-                .setOAuthAccessToken("2598404008-EAWKX8WNIF0hkVfJ76EI9MznFGJ2hleW3xkXkQx")
-                .setOAuthAccessTokenSecret("6vthrEaGPGaAxjLpyPHW1GQvZROR1RRE6DvJEDHNqLNyG");
-
+        ConfigurationBuilder config = twitterConfigurationService.getTwitterConfiguration();
         twitterStream = new TwitterStreamFactory(config.build()).getInstance().addListener(new StatusListener() {
             @Override
             public void onStatus(Status status) {
-                if (tweetValidatorService.isTweetValid(status)) {                    
+                if (tweetValidatorService.isTweetValid(status)) {
                     log.debug("@" + status.getUser().getScreenName() + " - " + status.getText());
                     tweets.add(new Tweet(id++, status.getUser().getScreenName(), status.getText(),
                             status.getPlace().getFullName()));

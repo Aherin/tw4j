@@ -4,6 +4,7 @@ import javax.ws.rs.core.Response;
 
 import org.acme.entities.Tweet;
 import org.acme.services.StreamingService;
+import org.acme.services.TwitterTrendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class TweetResource {
     @Autowired
     StreamingService streamingService;
+    @Autowired
+    TwitterTrendService twitterTrendService;
 
     @GetMapping(produces = "application/json")
     public Response listTweets() {
@@ -30,5 +33,10 @@ public class TweetResource {
     @PutMapping(path = "/valid/{id}", produces = "application/json")
     public Response updateValidTweets(@PathVariable(name = "id") long id) {
         return Response.ok(Tweet.updateValidTweet(streamingService.getTweets(), id)).build();
+    }
+
+    @GetMapping(path = "/trends", produces = "application/json")
+    public Response listTrends() {
+        return Response.ok(twitterTrendService.getWorldwideTrends()).build();
     }
 }
