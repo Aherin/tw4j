@@ -5,9 +5,30 @@ Este proyecto esta basado en las librerias de Twitter4j para el consumo la API p
 ## Prerequisitos
 Es necesario tener instalados las siguientes herramientas:
 
-* Java 11
-* Apache Maven 3.6+
-## Running the application in dev mode
+* [Java 11](https://www.oracle.com/co/java/technologies/javase-jdk11-downloads.html)
+* [Apache Maven 3.6.3](https://maven.apache.org/download.cgi)
+
+## Configuración
+Para poder usar las librerias de Twitter4j se debn obtener los tokens de autorización. Estos son otorgados en la plataforma para desarrolladores de Twitter [developer.twitter.com](https://developer.twitter.com/en)
+
+Una vez se disponga de dichos tokens vamos al archivo de configuración que se encuentra en la siguiente ruta:
+
+```shell script
+tw4j\src\main\resources\application.properties
+```
+
+Una vez en el archivo vamos a colocar los token en cada una de las siguientes propiedades: 
+
+```shell script
+twitter.config.oauth.consumer.key=***********************
+twitter.config.oauth.consumer.secret=***********************
+twitter.config.oauth.access.token=***********************
+twitter.config.oauth.access.token.secret=***********************
+```
+
+y con esto finaliza la configuración.
+
+## Ejecutando la aplicación en modo desarrollo
 
 You can run your application in dev mode that enables live coding using:
 ```shell script
