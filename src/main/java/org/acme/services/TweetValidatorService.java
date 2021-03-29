@@ -7,12 +7,15 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.core.Response;
 
 import org.acme.entities.Tweet;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import twitter4j.Status;
 import twitter4j.User;
 
 @ApplicationScoped
 public class TweetValidatorService {
+    @ConfigProperty(name = "twitter.validator.minumun.followers.count", defaultValue="1500")
+    int minimumFollowersCount;
 
     public TweetValidatorService() {
         // Empty constructor implementation
@@ -23,7 +26,7 @@ public class TweetValidatorService {
     }
 
     public boolean isTweetValid(Status status) {
-        return isfollowersCountGreaterThanOrEqualTo(status.getUser(), 1) && hasLocationEnabled(status)
+        return isfollowersCountGreaterThanOrEqualTo(status.getUser(), minimumFollowersCount) && hasLocationEnabled(status)
                 && hasAllowedLanguage(status);
     }
 
