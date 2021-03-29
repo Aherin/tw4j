@@ -29,9 +29,9 @@ public class StreamingService {
     private static final Logger log = Logger.getLogger(StreamingService.class);
 
     @Autowired
-    private TweetValidatorService tweetValidatorService;
+    TweetValidatorService tweetValidatorService;
     @Autowired
-    private TwitterConfigurationService twitterConfigurationService;
+    TwitterConfigurationService twitterConfigurationService;
 
     /**
      * Este metodo se arranca al momento que se inicializa la aplicacion y permite iniciar el 
