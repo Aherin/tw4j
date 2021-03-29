@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,6 +22,8 @@ public class TwitterTrendService {
 
     @Autowired
     private TwitterConfigurationService twitterConfigurationService;
+    @ConfigProperty(name = "twitter.trend.maximum.hashtag.results", defaultValue="10")
+    int maximumHashtagResults;
 
     public List<Trend> getWorldwideTrends() {
         int count = 0;
@@ -32,7 +35,7 @@ public class TwitterTrendService {
             for (Trend trend : trends.getTrends()) {
                 count++;
                 trendList.add(trend);
-                if (count == 10) {
+                if (count == maximumHashtagResults) {
                     break;
                 }
             }

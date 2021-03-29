@@ -2,17 +2,29 @@ package org.acme.services;
 
 import javax.enterprise.context.ApplicationScoped;
 
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+
 import twitter4j.conf.ConfigurationBuilder;
 
 @ApplicationScoped
 public class TwitterConfigurationService {
+    @ConfigProperty(name = "twitter.config.debug.enable")
+    boolean debug;
+    @ConfigProperty(name = "twitter.config.oauth.consumer.key")
+    String consumerKey;
+    @ConfigProperty(name = "twitter.config.oauth.consumer.secret")
+    String consumerSecret;
+    @ConfigProperty(name = "twitter.config.oauth.access.token")
+    String accessToken;
+    @ConfigProperty(name = "twitter.config.oauth.access.token.secret")
+    String accessTokenSecret;
 
     public ConfigurationBuilder getTwitterConfiguration() {
         ConfigurationBuilder config = new ConfigurationBuilder();
-        config.setDebugEnabled(false).setOAuthConsumerKey("jRtx7mcn1vhgmkt15MnDOV3dY")
-                .setOAuthConsumerSecret("U7JpOrO82V6h7FL1pVw4ioNoaZbt7TGXJbP1H6YLGKZpUFrIBg")
-                .setOAuthAccessToken("2598404008-EAWKX8WNIF0hkVfJ76EI9MznFGJ2hleW3xkXkQx")
-                .setOAuthAccessTokenSecret("6vthrEaGPGaAxjLpyPHW1GQvZROR1RRE6DvJEDHNqLNyG");
+        config.setDebugEnabled(debug).setOAuthConsumerKey(consumerKey)
+                .setOAuthConsumerSecret(consumerSecret)
+                .setOAuthAccessToken(accessToken)
+                .setOAuthAccessTokenSecret(accessTokenSecret);
         return config;
     }
 }
