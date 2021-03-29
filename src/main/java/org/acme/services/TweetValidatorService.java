@@ -1,8 +1,12 @@
 package org.acme.services;
 
 import java.util.Arrays;
+import java.util.Set;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.ws.rs.core.Response;
+
+import org.acme.entities.Tweet;
 
 import twitter4j.Status;
 import twitter4j.User;
@@ -15,7 +19,7 @@ public class TweetValidatorService {
     }
 
     enum Language {
-     ES, FR, IT
+        ES, FR, IT
     }
 
     public boolean isTweetValid(Status status) {
@@ -36,6 +40,15 @@ public class TweetValidatorService {
         long count = Arrays.asList(Language.values()).stream()
                 .filter(language -> language.toString().equalsIgnoreCase(status.getLang())).count();
         return count > 0;
+    }
+
+    public Response processValidationUpdate(Set<Tweet> tweets, long id) {
+        String codeNotFoundMessage = "{\"errorMessage\": \"Code not found\"}";
+        Tweet tweet = Tweet.updateValidTweet(tweets, id);
+        if (tweet.getScreenName() == null) {
+            return Response.status(javax.ws.rs.core.Response.Status.NOT_FOUND).entity(codeNotFoundMessage).build();
+        }
+        return Response.status(javax.ws.rs.core.Response.Status.CREATED).entity(tweet).build();
     }
 
 }

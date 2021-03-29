@@ -5,6 +5,7 @@ import javax.ws.rs.core.Response.Status;
 
 import org.acme.entities.Tweet;
 import org.acme.services.StreamingService;
+import org.acme.services.TweetValidatorService;
 import org.acme.services.TwitterTrendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,8 @@ public class TweetResource {
     StreamingService streamingService;
     @Autowired
     TwitterTrendService twitterTrendService;
+    @Autowired
+    TweetValidatorService tweetValidatorService;
 
     @GetMapping(produces = "application/json")
     public Response listTweets() {
@@ -33,12 +36,7 @@ public class TweetResource {
 
     @PutMapping(path = "/valid/{id}", produces = "application/json")
     public Response updateValidTweets(@PathVariable(name = "id") long id) {
-        String codeNotFoundMessage = "{\"errorMessage\": \"Code not found\"}";
-        Tweet tweet = Tweet.updateValidTweet(streamingService.getTweets(), id);
-        if (tweet.getScreenName() == null) {
-            return Response.status(Status.NOT_FOUND).entity(codeNotFoundMessage).build();
-        }
-        return Response.status(Status.CREATED).entity(tweet).build();
+        return tweetValidatorService.processValidationUpdate(streamingService.getTweets(), id);
     }
 
     @GetMapping(path = "/trends", produces = "application/json")
