@@ -19,6 +19,10 @@ public class TwitterConfigurationService {
     @ConfigProperty(name = "twitter.config.oauth.access.token.secret")
     String accessTokenSecret;
 
+    /**
+     * Retorna la configuracion necesaria para la autenticacion con la API publica de Twitter
+     * @return {@link ConfigurationBuilder}
+     */
     public ConfigurationBuilder getTwitterConfiguration() {
         ConfigurationBuilder config = new ConfigurationBuilder();
         config.setDebugEnabled(debug).setOAuthConsumerKey(consumerKey).setOAuthConsumerSecret(consumerSecret)

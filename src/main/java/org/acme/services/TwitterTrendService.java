@@ -25,6 +25,10 @@ public class TwitterTrendService {
     @ConfigProperty(name = "twitter.trend.maximum.hashtag.results", defaultValue = "10")
     int maximumHashtagResults;
 
+    /**
+     * Retorna una lista de las tendencias de Twitter a nivel global
+     * @return {@link List<{@link Trend}>
+     */
     public List<Trend> getWorldwideTrends() {
         int count = 0;
         List<Trend> trendList = new ArrayList<>();

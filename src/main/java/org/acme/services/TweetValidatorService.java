@@ -25,26 +25,54 @@ public class TweetValidatorService {
         ES, FR, IT
     }
 
+    /**
+     * Realiza una serie de validaciones con respecto a las restricciones de diseño con el fin de
+     * garantizar la persistencia de datos correctos. Si todo el correcto retorna {@code true }
+     * @param status
+     * @return {@link Boolean}
+     */
     public boolean isTweetValid(Status status) {
         return isfollowersCountGreaterThanOrEqualTo(status.getUser(), minimumFollowersCount)
                 && hasLocationEnabled(status) && hasAllowedLanguage(status);
     }
 
+    /**
+     * Valida si el usuario de Twitter tiene un numero mayor o igual de N seguidores
+     * @param user
+     * @param minimumFollowersCount
+     * @return {@link Boolean}
+     */
     private boolean isfollowersCountGreaterThanOrEqualTo(User user, int minimumFollowersCount) {
 
         return user.getFollowersCount() >= minimumFollowersCount;
     }
 
+    /**
+     * Valida si el usuario tiene habilitada la opcion de localizacion
+     * @param status
+     * @return {@link Boolean}
+     */
     private boolean hasLocationEnabled(Status status) {
         return status.getPlace() != null;
     }
 
+    /**
+     * Valida si el Tweet tiene uno de los lenguajes permitidos (Español, Frances, Italiano)
+     * @param status
+     * @return {@link Boolean}
+     */
     private boolean hasAllowedLanguage(Status status) {
         long count = Arrays.asList(Language.values()).stream()
                 .filter(language -> language.toString().equalsIgnoreCase(status.getLang())).count();
         return count > 0;
     }
 
+    /**
+     * Realiza la comprobacion si el Tweet fue actualizado o no
+     * @param tweets
+     * @param id
+     * @return {@link Response}
+     */
     public Response processValidationUpdate(Set<Tweet> tweets, long id) {
         String codeNotFoundMessage = "{\"errorMessage\": \"Code not found\"}";
         Tweet tweet = Tweet.updateValidTweet(tweets, id);

@@ -23,11 +23,22 @@ public class Tweet {
         this.id = id;
     }
 
+    /**
+     * Regresa una lista de Tweets los cuales tienen la propiedad {@code valid} en {@code true}
+     * @param tweets
+     * @return {@code Set<Tweet>}
+     */
     public static Set<Tweet> getValidTweets(Set<Tweet> tweets) {
         Stream<Tweet> stream = tweets.stream();
         return stream.filter(t -> Boolean.TRUE.equals(t.getValid())).collect(Collectors.toSet());
     }
 
+    /**
+     * Regresa un objecto de tipo {@link Tweet} una vez se ha actualizado el parametro {@code valid}
+     * @param tweets
+     * @param id
+     * @return {@link Tweet}
+     */
     public static Tweet updateValidTweet(Set<Tweet> tweets, long id) {
         Tweet foundTweet = new Tweet();
         for (Tweet tweet : tweets) {
