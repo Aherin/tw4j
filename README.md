@@ -1,9 +1,12 @@
-# tw4j project
+# TW4J Twitter's Custom API
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+Este proyecto esta basado en las librerias de Twitter4j para el consumo la API publica de Twitter y de esta manera crear una API REST personalizada.
 
-If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+## Prerequisitos
+Es necesario tener instalados las siguientes herramientas:
 
+* Java 11
+* Apache Maven 3.6+
 ## Running the application in dev mode
 
 You can run your application in dev mode that enables live coding using:
