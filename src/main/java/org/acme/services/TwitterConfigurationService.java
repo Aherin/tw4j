@@ -21,10 +21,8 @@ public class TwitterConfigurationService {
 
     public ConfigurationBuilder getTwitterConfiguration() {
         ConfigurationBuilder config = new ConfigurationBuilder();
-        config.setDebugEnabled(debug).setOAuthConsumerKey(consumerKey)
-                .setOAuthConsumerSecret(consumerSecret)
-                .setOAuthAccessToken(accessToken)
-                .setOAuthAccessTokenSecret(accessTokenSecret);
+        config.setDebugEnabled(debug).setOAuthConsumerKey(consumerKey).setOAuthConsumerSecret(consumerSecret)
+                .setOAuthAccessToken(accessToken).setOAuthAccessTokenSecret(accessTokenSecret);
         return config;
     }
 }

@@ -14,7 +14,7 @@ import twitter4j.User;
 
 @ApplicationScoped
 public class TweetValidatorService {
-    @ConfigProperty(name = "twitter.validator.minumun.followers.count", defaultValue="1500")
+    @ConfigProperty(name = "twitter.validator.minumun.followers.count", defaultValue = "1500")
     int minimumFollowersCount;
 
     public TweetValidatorService() {
@@ -26,8 +26,8 @@ public class TweetValidatorService {
     }
 
     public boolean isTweetValid(Status status) {
-        return isfollowersCountGreaterThanOrEqualTo(status.getUser(), minimumFollowersCount) && hasLocationEnabled(status)
-                && hasAllowedLanguage(status);
+        return isfollowersCountGreaterThanOrEqualTo(status.getUser(), minimumFollowersCount)
+                && hasLocationEnabled(status) && hasAllowedLanguage(status);
     }
 
     private boolean isfollowersCountGreaterThanOrEqualTo(User user, int minimumFollowersCount) {

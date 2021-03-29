@@ -22,7 +22,7 @@ public class TwitterTrendService {
 
     @Autowired
     private TwitterConfigurationService twitterConfigurationService;
-    @ConfigProperty(name = "twitter.trend.maximum.hashtag.results", defaultValue="10")
+    @ConfigProperty(name = "twitter.trend.maximum.hashtag.results", defaultValue = "10")
     int maximumHashtagResults;
 
     public List<Trend> getWorldwideTrends() {
