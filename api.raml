@@ -1,0 +1,143 @@
+#%RAML 1.0
+title: Twitter's Custom API REST
+version: 1.0
+baseUri: http://localhost:8080/
+documentation:
+  - title: Introduccion
+    content: |
+        Este servicio usa las librerias de Twitter4j para consumir la API publica de Twitter y con esta informacion se crea una API REST personalizada.
+types:
+  ValidResponse:
+    displayName: Valid response
+    type: array
+    items: Tweet
+  TrendsResponse:
+    displayName: Trends response
+    type: array
+    items: Trend    
+  Tweet:
+    displayName: Tweet
+    type: object
+    properties:
+      id:
+        displayName: id
+        type: integer
+      screenName:
+        displayName: screenName
+        type: string
+      text:
+        displayName: text
+        type: string
+      place:
+        displayName: place
+        type: string
+      valid:
+        displayName: valid
+        type: boolean
+  Trend:
+    displayName: Trend
+    type: object
+    properties:
+      name:
+        displayName: name
+        type: string
+      url:
+        displayName: url
+        type: string
+      query:
+        displayName: query
+        type: string
+      tweetVolume:
+        displayName: tweetVolume
+        type: integer
+  NotFound:
+    displayName: Not found
+    type: object
+    properties:
+      errorMessage:
+        displayName: errorMessage
+        type: string
+/tweets:
+  displayName: Twitter's Custom API REST
+  get:
+      description: Este servicio permite listar los tweets provenientes de la libreria de streaming de Twitter4j
+      responses:
+            200:
+                body:
+                    application/json:
+                        displayName: response
+                        description: Valid response
+                        type: ValidResponse
+                        example: |
+                            [
+                              {
+                                "id": 0,
+                                "screenName": "User123",
+                                "text": "My recent tweet",
+                                "place": "Bogota, Colombia",
+                                "valid": false
+                              }
+                            ]
+  /valid:
+    get:
+        description: Este servicio permite listar todos los tweets marcados como valido por el usuario
+        responses:
+            200:
+                body:
+                    application/json:
+                        displayName: response
+                        description: Valid response
+                        type: ValidResponse
+                        example: |
+                            [
+                              {
+                                "id": 1,
+                                "screenName": "User456",
+                                "text": "My recent tweet",
+                                "place": "Cordoba, Argentina",
+                                "valid": true
+                              }
+                            ]
+    /{id}:  
+      put:  
+          description: Este servicio permite actualizar el estado de validacion de un tweet, para ello debe ingresar en la URI el codigo del tweet.
+          responses:
+            201:
+                body:
+                    application/json:
+                        type: Tweet
+                        example: |
+                            {
+                              "id": 1,
+                              "screenName": "User789",
+                              "text": "My recent tweet",
+                              "place": "Madrid, Spain",
+                              "valid": true
+                            }
+            404:
+                body:
+                    application/json:
+                        type: NotFound
+                        example: |
+                            {
+                              "errorMessage": "Code not found"
+                            }               
+  /trends:
+    get:
+        description: Este servicio permite listar las tendencias mas relevantes alrededor del mundo.
+        responses:
+            200:
+                body:
+                    application/json:
+                        displayName: response
+                        description: Trends response
+                        type: TrendsResponse
+                        example: |
+                            [
+                              {
+                                "name": "#RHOA",
+                                "url": "http://twitter.com/search?q=%23RHOA",
+                                "query": "%23RHOA",
+                                "tweetVolume": 16476
+                              }
+                            ]                          
